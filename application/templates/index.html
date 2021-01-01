@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+{% block body %}
+
+<h2>Exercises</h2>
+{% for exercises in all_exercise %}
+<div style="position: fixed;">
+    {{exercises.exercise_name + ": "}} 
+    {{exercises.description}}
+    <br>
+    {{exercises.date_created}}
+    <br>
+    <form style="float: left;" action="{{ url_for('update', id=exercises.id) }}">
+        <input type="submit" value="Update">
+    </form>
+    <form style="float: left;" action="{{ url_for('add_loc_exercise', id=exercises.id) }}">
+        <input type="submit" value="Add Location">
+    </form>
+    <form style="float: left;" action="{{ url_for('view_loc_exercise', id=exercises.id) }}">
+        <input type="submit" value="View Location">
+    </form>
+    <form style="float: left;" action="{{ url_for('delete', id=exercises.id) }}">
+        <input type="submit" value="delete">
+    </form>
+</div><br><br><br><br>
+
+{% endfor%}
+
+<h2>Locations</h2>
+{% for locations in all_locations %}
+<div style="position: fixed;">
+    {{locations.location_name + ": "}} 
+    {{locations.description}}
+    <br>
+    {{locations.date_created}}
+    <br>
+    <form style="float: left;" action="{{ url_for('update_location', id=locations.id) }}">
+        <input type="submit" value="Update">
+    </form>
+    <form style="float: left;" action="{{ url_for('delete_location', id=locations.id) }}">
+        <input type="submit" value="Delete">
+    </form>
+    <form style="float: left;" action="{{ url_for('add_location_exercise', id=locations.id) }}">
+        <input type="submit" value="Add Exercise">
+    </form>
+    <form style="float: left;" action="{{ url_for('view_location_exercise', id=locations.id) }}">
+        <input type="submit" value="View Exercises">
+    </form>
+</div><br><br><br><br>
+
+{% endfor %}
+
+
+{% endblock body %}

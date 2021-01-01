@@ -1,0 +1,15 @@
+{%extends 'layout.html' %}
+{% block body %}
+<br><br>
+original task: {{locations.description}}
+<br><br>
+<form action='' method="POST">
+    {{form.hidden_tag() }}
+    {{ form.location_name.label}} {{form.location_name}}<br>
+    {{ form.description.label }} {{ form.description }}<br>
+    {{ form.address.label }} {{ form.address }}<br>
+    {{ form.submit }}
+</form>
+
+
+{% endblock body %}

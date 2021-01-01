@@ -1,0 +1,15 @@
+{%extends 'layout.html' %}
+{% block body %}
+
+<h2>Locations Exercise</h2>
+
+{% for location in all_location_exercises %}
+    {% for exercise in all_exercises %}
+        {% if exercise.id == location.exercise_id %}
+        {{ exercise.exercise_name }}
+        <br>
+        {% endif %}
+    {% endfor %}
+{% endfor %}
+
+{% endblock body %}
