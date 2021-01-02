@@ -16,13 +16,15 @@ def home():
 def create():
     form = ExerciseForm()
     if request.method == "POST":
-        if form.validate_on_submit():
-            new_exercise = Exercises(exercise_name=form.exercise_name.data,
-            description=form.description.data,sets=form.sets.data,
-            reps=form.reps.data) 
-            db.session.add(new_exercise)
-            db.session.commit()
-            return redirect(url_for("home"))
+        exercise_name = form.exercise_name.data
+        description = form.description.data
+        sets = form.sets.data
+        reps = form.reps.data
+        # if form.validate_on_submit():
+        new_exercise = Exercises(exercise_name=exercise_name,description=description,sets=sets,reps=reps) 
+        db.session.add(new_exercise)
+        db.session.commit()
+        return redirect(url_for("home"))
 
     return render_template("add.html", title="Add Exercise",form=form)
 
@@ -31,12 +33,15 @@ def create():
 def add_exe_location():
     form = LocationForm()
     if request.method == "POST":
-        if form.validate_on_submit():
-            new_location = Locations(location_name=form.location_name.data,
-            description=form.description.data,address=form.address.data) 
-            db.session.add(new_location)
-            db.session.commit()
-            return redirect(url_for("home"))
+        # if form.validate_on_submit():
+        location_name = form.location_name.data
+        description = form.description.data
+        address = form.address.data
+        new_location = Locations(location_name=location_name,
+        description=description,address=address) 
+        db.session.add(new_location)
+        db.session.commit()
+        return redirect(url_for("home"))
 
     return render_template("add_location.html", title="Add Location",form=form)
 
@@ -52,7 +57,7 @@ def update(id):
         db.session.commit()
         return redirect(url_for("home"))
 
-    return render_template("update.html", title="Update Task", form=form,exercise=exercise)
+    return render_template("update.html", title="Update Exercise", form=form,exercise=exercise)
 
 @app.route("/update_location/<int:id>", methods= ["GET","POST"])
 def update_location(id):
@@ -93,7 +98,7 @@ def add_location_exercise(id):
         adding_together = Location_exercises(exercise_id=exercise_selected.id,location_id=location.id)
         db.session.add(adding_together)
         db.session.commit()
-        return redirect(url_for("home")) 
+        return redirect(url_for("view_location_exercise", id=id)) 
     return render_template("add_location_exercise.html", title="Adding Exercise", form=form, location=location, exe_form=exe_form, exercise_selected=exercise_selected)
 
 @app.route("/view_location_exercise/<int:id>",methods=["GET","POST"])
@@ -114,7 +119,7 @@ def add_loc_exercise(id):
         adding_together = Location_exercises(location_id=location_selected.id,exercise_id=exercise.id)
         db.session.add(adding_together)
         db.session.commit()
-        return redirect(url_for("home")) 
+        return redirect(url_for("view_loc_exercise",id=id)) 
     return render_template("add_loc_exercise.html", title="Adding Location", form=form, exercise=exercise, loc_form=loc_form, location_selected=location_selected)
 
 @app.route("/view_loc_exercise/<int:id>",methods=["GET","POST"])
