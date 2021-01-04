@@ -2,6 +2,8 @@ import unittest
 import time
 from flask import url_for
 from urllib.request import urlopen
+from os import getenv
+
 
 from flask_testing import LiveServerTestCase
 from selenium import webdriver
@@ -12,8 +14,8 @@ from application.models import Exercises,Locations,Location_exercises
 class TestBase(LiveServerTestCase):
 
     def create_app(self):
-        app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:password@35.246.59.84/exercise_db"
-        app.config['SECRET_KEY'] = "dfshbdfbsidfbksbnf"
+        app.config['SQLALCHEMY_DATABASE_URI'] = getenv("DATABASE_URI")
+        app.config['SECRET_KEY'] = getenv("SECRET_KEY")
         return app
 
     def setUp(self):

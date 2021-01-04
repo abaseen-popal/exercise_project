@@ -1,6 +1,8 @@
 import unittest
 from flask import url_for
 from flask_testing import TestCase
+from os import getenv
+
 
 from application import app, db
 from application.models import Exercises,Locations,Location_exercises
@@ -9,8 +11,8 @@ from application.models import Exercises,Locations,Location_exercises
 class TestBase(TestCase):
     def create_app(self):
         app.config.update(
-            SQLALCHEMY_DATABASE_URI="mysql+pymysql://root:password@35.246.59.84/exercise_db",
-            SECRET_KEY="SECRET_KEY",
+            SQLALCHEMY_DATABASE_URI=getenv("DATABASE_URI"),
+            SECRET_KEY=getenv("SECRET_KEY"),
             DEBUG=True
         )
         return app
